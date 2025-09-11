@@ -1,17 +1,13 @@
 central:
   ros__parameters:
-    formation:
-      num_robots: 6
-      radius: 4.0
-      rc: [10.0, 10.0, 10.0, 10.0, 10.0, 10.0]
-      w: 2.0
-      q: 6.0
-      m: 2
-      dt: 0.1
-    phase_shift:
-      k: 5.76
-      h: 2.62
-    dynamics:
-      e: 0.5
-      kv: 0.25
-      kw: 0.1
+    N: 6
+    RR: 3.0 #init radius
+    rc: [7.0, 7.0, 7.0, 7.0, 7.0, 7.0]
+    w: 3.0 # B_i = w*pi/q
+    q: 6.0
+    m: 2
+    dt: 0.1
+    k: 5.76 # 11pi/6 : This decides the distance between each robots per cluster
+    e: 0.5
+    kv: 0.25
+    kw: 0.1

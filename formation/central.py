@@ -6,33 +6,35 @@ import numpy as np
 
 class CentralNode(Node):
     def __init__(self):
-        super().__init__(
-            'central',
-            allow_undeclared_parameters=True,
-            automatically_declare_parameters_from_overrides=True
-        )
+        super().__init__('central',)
 
-        self.N = 6
-        self.RR = 2.0
-        self.rc = [6.0] * 6
-        self.w = 2.0
-        self.q = 6.0
+        # reminder: only N,m and l are type-int, the rest are type-float.
+        self.declare_parameter('N', 6) #robot num
+        self.declare_parameter('RR', 2.0) #init radius
+        self.declare_parameter('rc', [6.0] * 6) #convergence radius
+        self.declare_parameter('w', 2.0) # init phase numerator
+        self.declare_parameter('q', 6.0) # init phase denominator
+        self.declare_parameter('m', 3) # cluster num
+        self.declare_parameter('dt', 0.1) # derivative time gap
+        self.declare_parameter('k', float(np.pi / 6)) #bias coeff for in-cluster phase diff
+        self.declare_parameter('l', 1) # pattern l
+        self.declare_parameter('e', 0.5) # coupling strength
+        self.declare_parameter('kv', 0.25) # velocity gain
+        self.declare_parameter('kw', 0.1) # angular velocity gain
 
-
-
-        self.m = 3
-
-
-
-
-        self.dt = 0.1
-        #self.k = 5.76 #11pi/6
-        self.k = np.pi / 6
-        self.l = 1
-
-        self.e = 0.5
-        self.kv = 0.25
-        self.kw = 0.1
+        #access yaml file's falues. 
+        self.N = self.get_parameter('N').value
+        self.RR = self.get_parameter('RR').value
+        self.rc = self.get_parameter('rc').value
+        self.w = self.get_parameter('w').value
+        self.q = self.get_parameter('q').value
+        self.m = self.get_parameter('m').value
+        self.dt = self.get_parameter('dt').value
+        self.k = self.get_parameter('k').value
+        self.l = self.get_parameter('l').value
+        self.e = self.get_parameter('e').value
+        self.kv = self.get_parameter('kv').value
+        self.kw = self.get_parameter('kw').value
 
         # -------------------------
         # Initialize states
@@ -47,20 +49,25 @@ class CentralNode(Node):
         # -------------------------
         # Coupling phase shift B
         # -------------------------
+
+        N = self.N
+        m = self.m
+        k = self.k
+        l = self.l
+        h = (2 * np.pi * l + (m - N) * k) / m
+        B = None  # Temporary local variable
         
-        self.h = (2 * np.pi * self.l + (self.m - self.N) * self.k) / self.m
-        
-        if self.m == 1:
-            self.B = [self.k, self.k, self.k, self.k, self.k, self.h]
-
-        elif self.m == 2:
-            self.B = [self.k, self.k, self.h, self.k, self.k, self.h]
-
-        elif self.m == 3:
-            self.B = [self.k, self.h, self.k, self.h, self.k, self.h]
-
+        #as of now, only case N==6 is considered
+        if m == 1:
+            B = [k, k, k, k, k, h]
+        elif m == 2:
+            B = [k, k, h, k, k, h]
+        elif m == 3:
+            B = [k, h, k, h, k, h]
         else:
-            self.B = [self.k] * self.N
+            B = [k] * N
+
+        self.B = B  # Assign once at the end
 
         # -------------------------
         # Create publishers for robot poses
@@ -75,7 +82,12 @@ class CentralNode(Node):
         # -------------------------
         self.timer = self.create_timer(self.dt, self.timer_callback)
 
-    def timer_callback(self): #this function is called every dt seconds
+    def timer_callback(self): 
+
+        """
+        this function is called every dt seconds passes to indicate that a time step has passed.
+        a common practice in ROS2 coding.
+        """
 
         dy = self.robot_dynamics(self.y, self.rc, self.B, self.N)
         self.y += self.dt * dy
@@ -106,6 +118,9 @@ class CentralNode(Node):
             self.publishers_list[i].publish(msg)
 
     def robot_dynamics(self, y, rc, B, N):
+        """
+        THe core logic for our project stays here.
+        """
         r = y[::3]
         phi = y[1::3]
         theta = y[2::3]
