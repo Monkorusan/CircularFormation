@@ -14,7 +14,7 @@ def quaternion_from_axis_angle(axis, angle_rad):
     return x, y, z, w
 
 def quaternion_multiply(q1, q2):
-    """Hamilton product q = q1 * q2 (x, y, z, w order)."""
+    """Hamilton product q = q1 * q2 (x, y, z, w order)."""
     x1, y1, z1, w1 = q1
     x2, y2, z2, w2 = q2
     x = w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2
