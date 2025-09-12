@@ -5,21 +5,21 @@ import os
 
 def generate_launch_description():
     rviz_config_path = os.path.join(
-        get_package_share_directory('formation'),
+        get_package_share_directory('CircularFormation_CoupledOscillators'),
         'rviz',
-        'formation.rviz'
+        'CircularFormation_CoupledOscillators.rviz'
     )
 
     return LaunchDescription([
         Node(
-            package='formation',
+            package='CircularFormation_CoupledOscillators',
             executable='central',
             name='central',
             output='screen',
-            parameters=[os.path.join(get_package_share_directory('formation'), 'params', 'robot_params.yaml')]
+            parameters=[os.path.join(get_package_share_directory('CircularFormation_CoupledOscillators'), 'params', 'robot_params.yaml')]
         ),
         Node(
-            package='formation',
+            package='CircularFormation_CoupledOscillators',
             executable='marker_publisher',
             output='screen'
         ),

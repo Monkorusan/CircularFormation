@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from glob import glob
 import os
 
-package_name = 'formation'
+package_name = 'CircularFormation_CoupledOscillators'
 
 setup(
     name=package_name,
@@ -21,8 +21,8 @@ setup(
     license='MIT',
     entry_points={
         'console_scripts': [
-            'central = formation.central:main',
-            'marker_publisher = formation.marker_publisher:main',
+            'central = CircularFormation_CoupledOscillators.central:main',
+            'marker_publisher = CircularFormation_CoupledOscillators.marker_publisher:main',
         ],
     },
     data_files=[
