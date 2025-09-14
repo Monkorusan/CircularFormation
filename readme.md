@@ -26,25 +26,33 @@ v_i \\
 \end{bmatrix}$$
 
 で与えられる。2輪移動型ロボットを図のように与えると、ベクトル場に追従するための制御入力は
+
 $$
 v_i = k_v \left( \frac{dr_i}{dt} \cos\theta_i + r_i \frac{d\phi_i}{dt} \sin\theta_i \right)
 $$
+
 $$
 \omega_i = k_\omega \left( r_i \frac{d\phi_i}{dt} \cos\theta_i - \frac{dr_i}{dt} \sin\theta_i \right)
 $$
+
 と導出される。
 
 結果：結合項においてバイアスを導入することで、クラスタを組むTrailing円形フォーメーション形成が可能となった。
+
 欠点：衝突回避は考慮されていない。
 
 次のtodo（導入すべき事項）:
 
 - ワールド座標系とロボットの位置を示す座標系をTF2で表現
-- 制約に基づく制御（簡単な二次計画法でもよい）
+- URDFファイルを用いた2輪移動型ロボットの可視化
+- 制約に基づく制御（衝突回避は保証されるが、計算量がややヘビー）
 
 ## 実行方法
 ### requirements
 - ROS2 Humble
+- 上記のインストール方法に関しては https://docs.ros.org/en/humble/Installation.html を参照
+- なお、本レポをクローンする前に、チュートリアルにBeginner級の修了まで読んでおくことが推奨される。
+- チュートリアルのURL：https://docs.ros.org/en/humble/Tutorials.html
 
 ### how2run (for the first time)
 <pre>
