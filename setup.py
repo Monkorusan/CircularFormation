@@ -16,13 +16,13 @@ setup(
     ],
     zip_safe=True,
     maintainer='monkorusan',
-    maintainer_email='monkorusan@example.com',
+    maintainer_email='chhuon.s.c359@.m.isct.ac.jp',
     description='Circular formation control in ROS 2',
     license='MIT',
     entry_points={
         'console_scripts': [
-            'central = CircularFormation_CoupledOscillators.central:main',
-            'marker_publisher = CircularFormation_CoupledOscillators.marker_publisher:main',
+            'central = CircularFormation.central:main',
+            'marker_publisher = CircularFormation.marker_publisher:main',
         ],
     },
     data_files=[

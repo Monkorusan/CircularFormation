@@ -4,7 +4,8 @@ from geometry_msgs.msg import PoseStamped
 import numpy as np
 
 
-class CentralNode(Node):
+class CentralNode(Node): 
+    """ROS2 node for imitating a virtual central computer"""
     def __init__(self):
         super().__init__('central',)
 
