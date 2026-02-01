@@ -116,12 +116,12 @@ class MarkerPublisher(Node):
 
         self.pub.publish(arr)
 
-def main(args=None):#this function is called when the node is started
+def main(args=None):
     rclpy.init(args=args)
     node = MarkerPublisher()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
 
-if __name__ == "__main__": #this is the entry point of the node
+if __name__ == "__main__": 
     main() 

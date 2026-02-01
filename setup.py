@@ -23,6 +23,7 @@ setup(
         'console_scripts': [
             'central = CircularFormation.central:main',
             'marker_publisher = CircularFormation.marker_publisher:main',
+            'param_reader = CircularFormation.param_reader:main'
         ],
     },
     data_files=[
